@@ -13,17 +13,15 @@ Requirements
 
 -  Validate user account balance before the money transfer operation.
 
--    Validate process through the authorization service before the end operation.
+-  Validate process through the authorization service before the end operation.
 
--   A operação de transferência deve ser uma transação (ou seja, revertida em qualquer caso de inconsistência) e o dinheiro deve voltar para a carteira do usuário que envia.
+-  The transfer operation must be a transaction, this is included for all inconsistencies through the every operation could be reverted and all money must return to the initial operation user wallet.
 
--   No recebimento de pagamento, o usuário ou lojista precisa receber notificação (envio de email, sms) enviada por um serviço de terceiro e eventualmente este serviço pode estar indisponível/instável. Use este mock para simular o envio (https://run.mocky.io/v3/54dc2cf1-3add-45b5-b5a9-6bf7e7f1f4a6).
-
--   Este serviço deve ser RESTFul.
+-  For money receive process, the user ou company must receive a notification by email or sms, consider all implications for this type of service like disponibility issues or instability and offline operations.
 
 ### Payload
 
-Faça uma **proposta** :heart: de payload, se preferir, temos uma exemplo aqui:
+This is an example of payload for a transaction
 
 POST /transaction
 
