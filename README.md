@@ -19,6 +19,9 @@ Requirements
 
 -  For money receive process, the user ou company must receive a notification by email or sms, consider all implications for this type of service like disponibility issues or instability and offline operations.
 
+### Architecture propose
+For all solutions we build some architecture [take a look](architecture/ARCHITECTURE.md)
+
 ### Payload
 
 This is an example of payload for a transaction
