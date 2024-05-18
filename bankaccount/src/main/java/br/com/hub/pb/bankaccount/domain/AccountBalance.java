@@ -7,8 +7,13 @@ import java.math.BigDecimal;
 
 public class AccountBalance {
     private static final Logger log = LoggerFactory.getLogger(AccountBalance.class);
-    private String id;
+    private final String id;
     private BigDecimal amount;
+
+    public AccountBalance(String id, BigDecimal amount) {
+        this.id = id;
+        this.amount = amount;
+    }
 
     public void updateBalance(final AccountOperation operation, final BigDecimal operationAmount) throws Exception {
         this.validateByOperation(operation, operationAmount);
@@ -28,13 +33,6 @@ public class AccountBalance {
                     throw new OperationAmountException(operation);
                 }
             }
-            case UPDATE -> {
-                // Update account doesn't allow zero operation
-                if (operationAmount.signum() == 0) {
-                    throw new OperationAmountException(operation);
-                }
-            }
-
         }
     }
 
@@ -42,8 +40,12 @@ public class AccountBalance {
         return amount;
     }
 
-    public void setAmount(final BigDecimal amount) {
+    public void updateBalanceAmount(final BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getId() {
+        return id;
     }
 
     private static class OperationAmountException extends RuntimeException {
