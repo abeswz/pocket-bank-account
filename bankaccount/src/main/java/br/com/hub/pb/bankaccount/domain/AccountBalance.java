@@ -17,22 +17,18 @@ public class AccountBalance {
 
     public void updateBalance(final AccountOperation operation, final BigDecimal operationAmount) throws Exception {
         this.validateByOperation(operation, operationAmount);
-        final var executed = operation.execute(this, operationAmount);
-
-        if (!executed) {
-            throw new Exception("balance operation failed");
-        }
+        operation.execute(this, operationAmount);
     }
 
-    private void validateByOperation(final AccountOperation operation, final BigDecimal operationAmount) {
+    private void validateByOperation(final AccountOperation operation, final BigDecimal operationAmount) throws OperationAmountException {
         log.info("validate account balance operation: {} - {}", operation, operationAmount);
         switch (operation) {
             case DEPOSIT, WITHDRAW -> {
-                // Deposit and Transfer operation only allow positive operation amount
                 if (operationAmount.signum() != 1) {
                     throw new OperationAmountException(operation);
                 }
             }
+            default -> throw new IllegalStateException("Unexpected value: " + operation);
         }
     }
 
@@ -48,11 +44,19 @@ public class AccountBalance {
         return id;
     }
 
-    private static class OperationAmountException extends RuntimeException {
+    private static class OperationAmountException extends Exception {
         private static final String AMOUNT_NOT_ALLOWED_FOR_OPERATION = "Amount not allowed for operation";
 
         public OperationAmountException(final AccountOperation operation) {
             log.error("{}: [{}]", AMOUNT_NOT_ALLOWED_FOR_OPERATION, operation.name());
+        }
+    }
+
+    private static class OperationBalanceFailedException extends Exception {
+        private static final String TRANSFER_OPERATION_CRITICAL_FAIL = "Transfer operation critical fail";
+
+        public OperationBalanceFailedException() {
+            super(TRANSFER_OPERATION_CRITICAL_FAIL);
         }
     }
 }

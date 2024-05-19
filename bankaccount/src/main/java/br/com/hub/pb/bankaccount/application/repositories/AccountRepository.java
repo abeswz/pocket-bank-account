@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface AccountRepository {
     Optional<AccountBalance> getAccountBalance(final String customerId, final String customerCode);
+
+    Optional<AccountBalance> save(final AccountBalance accountBalance);
 }
